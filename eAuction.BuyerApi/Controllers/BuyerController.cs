@@ -49,6 +49,8 @@ namespace eAuction.BuyerApi.Controllers
 
             catch (Exception ex)
             {
+                _logger.LogError(ex, ex.Message);
+
                 if (ex is ProductException)
                 {
                     return NotFound(ex.Message);
@@ -89,6 +91,8 @@ namespace eAuction.BuyerApi.Controllers
 
             catch (Exception ex)
             {
+                _logger.LogError(ex, ex.Message);
+
                 if (ex is ProductException || ex is BuyerException)
                 {
                     return NotFound(ex.Message);

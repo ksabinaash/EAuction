@@ -48,6 +48,8 @@ namespace eAuction.SellerApi.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, ex.Message);
+
                 if (ex is ProductException)
                 {
                     return NotFound(ex.Message);
@@ -86,6 +88,8 @@ namespace eAuction.SellerApi.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, ex.Message);
+
                 if (ex is ProductException)
                 {
                     return BadRequest(ex.Message);
@@ -123,6 +127,8 @@ namespace eAuction.SellerApi.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, ex.Message);
+
                 if (ex is ProductException || ex is ValidationException)
                 {
                     return BadRequest(ex.Message);
