@@ -1,5 +1,6 @@
 ﻿using eAuction.Common.Interfaces;
 using Microsoft.Azure.Cosmos;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Net;
@@ -9,13 +10,7 @@ namespace eAuction.Common.Repositories
 {
     public class CosmosRepository : ICosmosRepository
     {
-        // The Azure Cosmos DB endpoint for running this sample.
-        //private static readonly string EndpointUri = ConfigurationManager.AppSettings["EndPointUri"];
-        private static readonly string EndpointUri = "https://localhost:8081";
-
-        // The primary key for the Azure Cosmos account.
-        //private static readonly string PrimaryKey = ConfigurationManager.AppSettings["PrimaryKey"];
-        private static readonly string PrimaryKey = "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==";
+        private readonly IConfiguration _config;
 
         // The Cosmos client instance
         private CosmosClient cosmosClient;
@@ -31,10 +26,16 @@ namespace eAuction.Common.Repositories
 
         private string containerId = "Product";
 
-        public CosmosRepository()
+        public CosmosRepository(IConfiguration config)
         {
-            this.cosmosClient = new CosmosClient(EndpointUri, PrimaryKey, new CosmosClientOptions() { ApplicationName = "eAuction" });            
-        }        
+            this._config = config;
+
+            var endPoint = config.GetSection("EndPointUri").Value;
+
+            var primaryKey = config.GetSection("PrimaryKey").Value;
+
+            this.cosmosClient = new CosmosClient(endPoint, primaryKey, new CosmosClientOptions() { ApplicationName = "eAuction" });
+        }
 
         public async Task<ItemResponse<T>> AddItem<T>(T item, string id, string partitionKey)
         {
@@ -57,7 +58,7 @@ namespace eAuction.Common.Repositories
 
             return response;
         }
-        
+
         public async Task<List<T>> QueryItems<T>(string sqlQueryText)
         {
             this.database = await this.cosmosClient.CreateDatabaseIfNotExistsAsync(databaseId);
