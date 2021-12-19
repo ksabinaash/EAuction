@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace eAuction.BuyerApi.Controllers
 {
-    [Route("e-auction/api/v1/[controller]")]
+    [Route("api/v1/[controller]")]
     [Produces("application/json")]
     [ApiController]
     public class BuyerController : ControllerBase

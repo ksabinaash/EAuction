@@ -1,0 +1,64 @@
+{
+  "ReRoutes": [
+    {
+      "DownstreamPathTemplate": "/api/v1/seller/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44322
+        }
+      ],
+      "UpstreamPathTemplate": "/e-auction/api/v1/seller/{id}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/seller/add-product",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44322
+        }
+      ],
+      "UpstreamPathTemplate": "/e-auction/api/v1/seller/add-product",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/seller/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44322
+        }
+      ],
+      "UpstreamPathTemplate": "/e-auction/api/v1/seller/{id}",
+      "UpstreamHttpMethod": [ "DELETE"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/buyer/place-bid",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44394
+        }
+      ],
+      "UpstreamPathTemplate": "/e-auction/api/v1/buyer/place-bid",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/buyer/update-bid/{productId}/{buyerEmailld}/{newBidAmount}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44394
+        }
+      ],
+      "UpstreamPathTemplate": "/e-auction/api/v1/buyer/update-bid/{productId}/{buyerEmailld}/{newBidAmount}",
+      "UpstreamHttpMethod": [ "PUT" ]
+    }
+  ]
+}

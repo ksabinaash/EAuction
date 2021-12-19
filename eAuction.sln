@@ -5,9 +5,11 @@ VisualStudioVersion = 16.0.31911.196
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eAuction.Common", "eAuction.Common\eAuction.Common.csproj", "{87535457-F71C-4507-9112-9864F8A6EFA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eAuction.SellerApi", "eAuction.SellerApi\eAuction.SellerApi.csproj", "{54D16E87-32CC-4AA0-9428-56046883A38A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eAuction.SellerApi", "eAuction.SellerApi\eAuction.SellerApi.csproj", "{54D16E87-32CC-4AA0-9428-56046883A38A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eAuction.BuyerApi", "eAuction.BuyerApi\eAuction.BuyerApi.csproj", "{BCFD5E3C-6F17-4F8F-ADF7-9AE6992E5E24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eAuction.BuyerApi", "eAuction.BuyerApi\eAuction.BuyerApi.csproj", "{BCFD5E3C-6F17-4F8F-ADF7-9AE6992E5E24}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eAucation.ApiGateway", "eAucation.ApiGateway\eAucation.ApiGateway.csproj", "{042ACA24-9785-4B77-AEE9-8AAEC3794050}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{BCFD5E3C-6F17-4F8F-ADF7-9AE6992E5E24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCFD5E3C-6F17-4F8F-ADF7-9AE6992E5E24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCFD5E3C-6F17-4F8F-ADF7-9AE6992E5E24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{042ACA24-9785-4B77-AEE9-8AAEC3794050}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{042ACA24-9785-4B77-AEE9-8AAEC3794050}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{042ACA24-9785-4B77-AEE9-8AAEC3794050}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{042ACA24-9785-4B77-AEE9-8AAEC3794050}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
