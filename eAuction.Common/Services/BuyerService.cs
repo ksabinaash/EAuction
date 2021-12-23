@@ -117,7 +117,7 @@ namespace eAuction.Common.Services
                 throw new ValidationException("Bid can't be modified past the Product's Bid end date!");
             }
 
-            if (product.StartingPrice >= bid.BidAmount)
+            if (product.StartingPrice >= amount)
             {
                 throw new ValidationException("Bid can't be lower than/equal to the Product's Starting Price!");
             }
