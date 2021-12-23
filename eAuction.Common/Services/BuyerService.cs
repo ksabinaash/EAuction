@@ -85,6 +85,11 @@ namespace eAuction.Common.Services
                 throw new ValidationException("Bid can't be placed past the Product's Bid end date!");
             }
 
+            if (product.StartingPrice >= bid.BidAmount)
+            {
+                throw new ValidationException("Bid can't be lower than/equal to the Product's Starting Price!");
+            }
+
             else
             {
                 if (product.Buyers == null)
@@ -110,6 +115,11 @@ namespace eAuction.Common.Services
             if (product.BidEndDate < DateTime.Now)
             {
                 throw new ValidationException("Bid can't be modified past the Product's Bid end date!");
+            }
+
+            if (product.StartingPrice >= bid.BidAmount)
+            {
+                throw new ValidationException("Bid can't be lower than/equal to the Product's Starting Price!");
             }
 
             product.Buyers.ForEach(b =>
