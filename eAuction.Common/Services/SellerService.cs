@@ -26,6 +26,8 @@ namespace eAuction.Common.Services
 
             await this.GetProduct(Convert.ToInt32(product.ProductId), false).ConfigureAwait(false);
 
+            this.ValidateAddProduct(product);
+
             var response = await _repository.AddProduct(product).ConfigureAwait(false);
 
             _logger.LogInformation("Ended" + nameof(AddProduct));
@@ -63,10 +65,16 @@ namespace eAuction.Common.Services
 
             var products = await _repository.GetProducts().ConfigureAwait(false);
 
+            products?.ForEach(p =>
+            {
+                p.Buyers = p.Buyers.SortAmountByDescending();
+            });
+
             _logger.LogInformation("Ended" + nameof(GetProducts));
 
             return products;
         }
+
 
         private async Task<Product> GetProduct(int id, bool isProductExpected)
         {
@@ -74,7 +82,7 @@ namespace eAuction.Common.Services
 
             product = await _repository.GetProduct(id).ConfigureAwait(false);
 
-            product.Buyers = product?.Buyers?.OrderByDescending(b => b.BidAmount).ToList();
+            product.Buyers = product?.Buyers.SortAmountByDescending();
 
             if (isProductExpected && product.ProductId == null)
             {
@@ -87,6 +95,14 @@ namespace eAuction.Common.Services
             }
 
             return product;
+        }
+
+        public void ValidateAddProduct(Product product)
+        {
+            if (product.Buyers != null && product.Buyers?.Count > 0)
+            {
+                throw new ValidationException("Bids can't be added while creating a new Product!");
+            }
         }
 
         public void VaidateDeleteProduct(Product product)

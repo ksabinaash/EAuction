@@ -40,6 +40,8 @@ namespace eAuction.BuyerApi
 
             services.AddScoped<IBuyerService, BuyerService>();
 
+            services.AddCors();
+
             services.AddControllers()
                 .AddJsonOptions(opts =>
                 {
@@ -63,6 +65,14 @@ namespace eAuction.BuyerApi
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "eAuction.BuyerApi v1"));
             }
+
+            app.UseCors(builder =>
+            {
+                builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            });
 
             app.UseHttpsRedirection();
 

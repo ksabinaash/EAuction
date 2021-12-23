@@ -90,7 +90,7 @@ namespace eAuction.SellerApi.Controllers
             {
                 _logger.LogError(ex, ex.Message);
 
-                if (ex is ProductException)
+                if (ex is ProductException || ex is ValidationException)
                 {
                     return BadRequest(ex.Message);
                 }

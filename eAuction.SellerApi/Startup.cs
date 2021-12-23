@@ -33,6 +33,8 @@ namespace eAuction.SellerApi
 
             services.AddScoped<IBuyerService, BuyerService>();
 
+            services.AddCors();
+
             services.AddControllers()
                 .AddJsonOptions(opts =>
                  {
@@ -58,6 +60,14 @@ namespace eAuction.SellerApi
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors(builder =>
+            {
+                builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            });
 
             app.UseRouting();
 
