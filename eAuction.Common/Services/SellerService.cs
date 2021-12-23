@@ -2,6 +2,7 @@
 using eAuction.Common.Models;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -54,6 +55,17 @@ namespace eAuction.Common.Services
             _logger.LogInformation("Ended" + nameof(GetProductBids));
 
             return product;
+        }
+
+        public async Task<List<Product>> GetProducts()
+        {
+            _logger.LogInformation("Began" + nameof(GetProducts));
+
+            var products = await _repository.GetProducts().ConfigureAwait(false);
+
+            _logger.LogInformation("Ended" + nameof(GetProducts));
+
+            return products;
         }
 
         private async Task<Product> GetProduct(int id, bool isProductExpected)

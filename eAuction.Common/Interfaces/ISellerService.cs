@@ -1,4 +1,5 @@
 ﻿using eAuction.Common.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace eAuction.Common.Interfaces
@@ -10,5 +11,7 @@ namespace eAuction.Common.Interfaces
         Task<bool> DeleteProduct(int productId);
 
         Task<Product> GetProductBids(int productId);
+
+        Task<List<Product>> GetProducts();
     }
 }

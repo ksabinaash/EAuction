@@ -144,5 +144,36 @@ namespace eAuction.SellerApi.Controllers
                 _logger.LogInformation("Ended" + nameof(DeleteProduct));
             }   
         }
+
+        [HttpGet()]
+        [Produces(typeof(Product))]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        public virtual async Task<ActionResult<Product>> GetProducts()
+        {
+            _logger.LogInformation("Began" + nameof(GetProducts));
+
+            try
+            {
+                var response = await _service.GetProducts().ConfigureAwait(false);
+
+                if (response == null || response.Count == 0)
+                {
+                    return NotFound("No Data Found");
+                }
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+            finally
+            {
+                _logger.LogInformation("Ended" + nameof(GetProducts));
+            }
+        }
     }
 }
