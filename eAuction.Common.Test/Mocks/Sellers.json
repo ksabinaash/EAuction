@@ -1,0 +1,188 @@
+[
+  {
+    "id": "6",
+    "ProductName": "Diamond",
+    "ShortDescription": "Antique Jewellery",
+    "DetailedDescription": "Very Rare Blue Diamond worn by many Kings",
+    "Category": 2,
+    "StartingPrice": 1000,
+    "BidEndDate": "2021-12-26T12:02:03.11Z",
+    "Seller": {
+      "FirstName": "Steven",
+      "LastName": "Smith",
+      "Address": "Aus",
+      "City": "Sydney",
+      "State": "Australia",
+      "Pin": "636102",
+      "Phone": "987654321",
+      "Email": "stevensmith@example.com"
+    },
+    "Buyers": [],
+    "_rid": "PkxEAOrsDGMBAAAAAAAAAA==",
+    "_self": "dbs/PkxEAA==/colls/PkxEAOrsDGM=/docs/PkxEAOrsDGMBAAAAAAAAAA==/",
+    "_etag": "\"00000000-0000-0000-f7f5-93ca7c7001d7\"",
+    "_attachments": "attachments/",
+    "_ts": 1640261214
+  },
+  {
+    "id": "7",
+    "ProductName": "Gold",
+    "ShortDescription": "Antique Jewellery",
+    "DetailedDescription": "Very ancient Diamond worn by many queens",
+    "Category": 2,
+    "StartingPrice": 5000,
+    "BidEndDate": "2021-12-26T12:02:03.11Z",
+    "Seller": {
+      "FirstName": "Virat",
+      "LastName": "Kohli",
+      "Address": "Aus",
+      "City": "Sydney",
+      "State": "Australia",
+      "Pin": "636102",
+      "Phone": "987653321",
+      "Email": "viratkohli@example.com"
+    },
+    "Buyers": [
+      {
+        "ProductId": 2,
+        "BidAmount": 7000,
+        "FirstName": "Rahul",
+        "LastName": "Dravid",
+        "Address": "Aus",
+        "City": "Sydney",
+        "State": "Australia",
+        "Pin": "636102",
+        "Phone": "987655311",
+        "Email": "rahuldravid@example.com"
+      },
+      {
+        "ProductId": 2,
+        "BidAmount": 8000,
+        "FirstName": "Sachin",
+        "LastName": "Tendulkar",
+        "Address": "Aus",
+        "City": "Sydney",
+        "State": "Australia",
+        "Pin": "636102",
+        "Phone": "987154320",
+        "Email": "sachintendulkar@example.com"
+      }
+    ],
+    "_rid": "PkxEAOrsDGMDAAAAAAAAAA==",
+    "_self": "dbs/PkxEAA==/colls/PkxEAOrsDGM=/docs/PkxEAOrsDGMDAAAAAAAAAA==/",
+    "_etag": "\"00000000-0000-0000-f7f7-0e95c10801d7\"",
+    "_attachments": "attachments/",
+    "_ts": 1640261850
+  },
+  {
+    "id": "8",
+    "ProductName": "MonaLisa",
+    "ShortDescription": "Precious Painting",
+    "DetailedDescription": "Orifingal Paiting by the great Davinci",
+    "Category": 1,
+    "StartingPrice": 10000,
+    "BidEndDate": "2021-12-26T12:02:03.11Z",
+    "Seller": {
+      "FirstName": "Anil",
+      "LastName": "Smith",
+      "Address": "Aus",
+      "City": "Sydney",
+      "State": "Australia",
+      "Pin": "636102",
+      "Phone": "987254321",
+      "Email": "anilsmith@example.com"
+    },
+    "Buyers": [
+      ],
+      "_rid"
+      :
+      "PkxEAOrsDGMEAAAAAAAAAA==",
+      "_self"
+      :
+      "dbs/PkxEAA==/colls/PkxEAOrsDGM=/docs/PkxEAOrsDGMEAAAAAAAAAA==/",
+      "_etag"
+      :
+      "\"00000000-0000-0000-f7f7-27048a6d01d7\"",
+      "_attachments"
+      :
+      "attachments/",
+      "_ts"
+      :
+      1640261891
+  },
+  {
+    "id": "4",
+    "ProductName": "Car",
+    "ShortDescription": "Electric Car",
+    "DetailedDescription": "Design for Tesla's electric car",
+    "Category": 1,
+    "StartingPrice": 100000,
+    "BidEndDate": "2021-12-26T12:02:03.11Z",
+    "Seller": {
+      "FirstName": "Marsh",
+      "LastName": "Smith",
+      "Address": "Aus",
+      "City": "Sydney",
+      "State": "Australia",
+      "Pin": "636102",
+      "Phone": "987654321",
+      "Email": "marshsmith@example.com"
+    },
+    "Buyers": [],
+    "_rid": "PkxEAOrsDGMFAAAAAAAAAA==",
+    "_self": "dbs/PkxEAA==/colls/PkxEAOrsDGM=/docs/PkxEAOrsDGMFAAAAAAAAAA==/",
+    "_etag": "\"00000000-0000-0000-f7f7-8a7e9bc801d7\"",
+    "_attachments": "attachments/",
+    "_ts": 1640262058
+  },
+  {
+    "id": "10",
+    "ProductName": "Palace",
+    "ShortDescription": "Mysore Palace",
+    "DetailedDescription": "Blueprint for great Mysore Maharaja Palace",
+    "Category": 1,
+    "StartingPrice": 1000000,
+    "BidEndDate": "2021-12-26T12:02:03.11Z",
+    "Seller": {
+      "FirstName": "Anil",
+      "LastName": "Ambani",
+      "Address": "Aus",
+      "City": "Sydney",
+      "State": "Australia",
+      "Pin": "636102",
+      "Phone": "987654321",
+      "Email": "anilambani@example.com"
+    },
+    "Buyers": [
+      {
+        "ProductId": 5,
+        "BidAmount": 2000000,
+        "FirstName": "Elon",
+        "LastName": "Musk",
+        "Address": "Aus",
+        "City": "Sydney",
+        "State": "Australia",
+        "Pin": "636102",
+        "Phone": "987655321",
+        "Email": "elonmusk@example.com"
+      },
+      {
+        "ProductId": 5,
+        "BidAmount": 3000000,
+        "FirstName": "Mukesh",
+        "LastName": "Amabani",
+        "Address": "Aus",
+        "City": "Sydney",
+        "State": "Australia",
+        "Pin": "636102",
+        "Phone": "987654320",
+        "Email": "mukeshambani@example.com"
+      }
+    ],
+    "_rid": "PkxEAOrsDGMGAAAAAAAAAA==",
+    "_self": "dbs/PkxEAA==/colls/PkxEAOrsDGM=/docs/PkxEAOrsDGMGAAAAAAAAAA==/",
+    "_etag": "\"00000000-0000-0000-f7f7-427d75a901d7\"",
+    "_attachments": "attachments/",
+    "_ts": 1640261937
+  }
+]

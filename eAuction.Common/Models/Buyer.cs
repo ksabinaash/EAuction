@@ -18,7 +18,14 @@ namespace eAuction.Common.Models
     {
         public static List<Buyer> SortAmountByDescending(this List<Buyer> buyers)
         {
-            return buyers.OrderByDescending(b => b.BidAmount).ToList();
+            if (buyers != null)
+            {
+                return buyers.OrderByDescending(b => b.BidAmount).ToList();
+            }
+            else 
+            {
+                return new List<Buyer>();
+            }
         }
     }
 }

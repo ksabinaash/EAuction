@@ -3,7 +3,6 @@ using eAuction.Common.Models;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace eAuction.Common.Services
@@ -20,6 +19,7 @@ namespace eAuction.Common.Services
 
             this._repository = repository;
         }
+
         public async Task<Product> AddProduct(Product product)
         {
             _logger.LogInformation("Began" + nameof(AddProduct));
@@ -40,6 +40,8 @@ namespace eAuction.Common.Services
             _logger.LogInformation("Began" + nameof(DeleteProduct));
 
             var product = await this.GetProduct(productId, true).ConfigureAwait(false);
+
+            this.VaidateDeleteProduct(product);
 
             var response = await _repository.DeleteProduct(product).ConfigureAwait(false);
 
@@ -75,14 +77,11 @@ namespace eAuction.Common.Services
             return products;
         }
 
-
         private async Task<Product> GetProduct(int id, bool isProductExpected)
         {
             var product = new Product();
 
-            product = await _repository.GetProduct(id).ConfigureAwait(false);
-
-            product.Buyers = product?.Buyers.SortAmountByDescending();
+            product = await _repository.GetProduct(id).ConfigureAwait(false);            
 
             if (isProductExpected && product.ProductId == null)
             {
@@ -94,10 +93,12 @@ namespace eAuction.Common.Services
                 throw new ProductException("Product Id already available!");
             }
 
+            product.Buyers = product?.Buyers.SortAmountByDescending();
+
             return product;
         }
 
-        public void ValidateAddProduct(Product product)
+        private void ValidateAddProduct(Product product)
         {
             if (product.Buyers != null && product.Buyers?.Count > 0)
             {
@@ -105,7 +106,7 @@ namespace eAuction.Common.Services
             }
         }
 
-        public void VaidateDeleteProduct(Product product)
+        private void VaidateDeleteProduct(Product product)
         {
             if (product.Buyers?.Count > 0)
             {

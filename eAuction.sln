@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eAuction.MsgSender", "eAuct
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eAuction.MsgReceiver", "eAuction.MsgReceiver\eAuction.MsgReceiver.csproj", "{EC268714-81CF-4E39-A8D4-49BDEC2621A1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eAuction.Common.Test", "eAuction.Common.Test\eAuction.Common.Test.csproj", "{C72CE3B9-42C5-4D37-95AD-3D144D6F4E1B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{EC268714-81CF-4E39-A8D4-49BDEC2621A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC268714-81CF-4E39-A8D4-49BDEC2621A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC268714-81CF-4E39-A8D4-49BDEC2621A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C72CE3B9-42C5-4D37-95AD-3D144D6F4E1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C72CE3B9-42C5-4D37-95AD-3D144D6F4E1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C72CE3B9-42C5-4D37-95AD-3D144D6F4E1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C72CE3B9-42C5-4D37-95AD-3D144D6F4E1B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
