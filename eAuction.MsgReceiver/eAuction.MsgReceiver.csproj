@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\eAuction.Common\eAuction.Common.csproj" />
   </ItemGroup>
 
 </Project>

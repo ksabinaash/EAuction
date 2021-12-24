@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using eAuction.Common.Interfaces;
+using eAuction.Common.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -12,36 +15,79 @@ namespace eAuction.MsgSender.Controllers
     [ApiController]
     public class SenderController : ControllerBase
     {
-        // GET: api/<SenderController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly ILogger<SenderController> _logger;
+
+        private readonly IAzureMsgSenderService _service;
+
+        private readonly IConfiguration _config;
+
+        public SenderController(ILogger<SenderController> logger, IAzureMsgSenderService service, IConfiguration config)
         {
-            return new string[] { "value1", "value2" };
+            this._logger = logger;
+
+            this._service = service;
+
+            this._config = config;
         }
 
-        // GET api/<SenderController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpPost("addbid-queuemsg")]
+        [Produces(typeof(bool))]        
+        public virtual async Task<ActionResult<bool>> AddBidQueueMsg(Buyer bid)
         {
-            return "value";
+            _logger.LogInformation("Began" + nameof(AddBidQueueMsg));
+
+            try
+            {
+                var bidJsonMsg = JsonConvert.SerializeObject(bid);
+
+                var queueName = _config.GetSection("AzureSBBidQueue").Value;
+
+                await _service.SendMessage(bidJsonMsg, queueName).ConfigureAwait(false);
+
+                return true;
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+
+                return false;
+            }
+
+            finally
+            {
+                _logger.LogInformation("Ended" + nameof(AddBidQueueMsg));
+            }
         }
 
-        // POST api/<SenderController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost("addproductid-queuemsg")]
+        [Produces(typeof(bool))]
+        public virtual async Task<ActionResult<bool>> AddProductIdMsg(int productId)
         {
-        }
+            _logger.LogInformation("Began" + nameof(AddProductIdMsg));
 
-        // PUT api/<SenderController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+            try
+            {
+                var productJsonMsg = JsonConvert.SerializeObject(productId);
 
-        // DELETE api/<SenderController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+                var queueName = _config.GetSection("AzureSBProductQueue").Value;
+
+                await _service.SendMessage(productJsonMsg, queueName).ConfigureAwait(false);
+
+                return true;
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+
+                return false;
+            }
+
+            finally
+            {
+                _logger.LogInformation("Ended" + nameof(AddProductIdMsg));
+            }
         }
     }
 }

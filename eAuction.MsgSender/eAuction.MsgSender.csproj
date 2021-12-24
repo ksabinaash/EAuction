@@ -17,4 +17,8 @@
     <Folder Include="Services\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\eAuction.Common\eAuction.Common.csproj" />
+  </ItemGroup>
+
 </Project>
