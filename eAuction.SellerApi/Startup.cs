@@ -23,6 +23,8 @@ namespace eAuction.SellerApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
+
             services.AddLogging();
 
             services.AddScoped<ICosmosRepository, CosmosRepository>();
@@ -31,9 +33,7 @@ namespace eAuction.SellerApi
 
             services.AddScoped<ISellerService, SellerService>();
 
-            services.AddScoped<IBuyerService, BuyerService>();
-
-            services.AddCors();
+            services.AddScoped<IBuyerService, BuyerService>();            
 
             services.AddControllers()
                 .AddJsonOptions(opts =>
@@ -54,10 +54,12 @@ namespace eAuction.SellerApi
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "eAuction.SellerApi v1"));
+                app.UseDeveloperExceptionPage();                
             }
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "eAuction.SellerApi v1"));
 
             app.UseHttpsRedirection();
 

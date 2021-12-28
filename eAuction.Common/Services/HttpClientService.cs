@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using eAuction.Common.Interfaces;
+using eAuction.Common.Models;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Globalization;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace eAuction.Common.Services
 {
-    public class HttpClientService
+    public class HttpClientService : IHttpClientService
     {
         private readonly ILogger<HttpClientService> _logger;
 
@@ -21,42 +23,24 @@ namespace eAuction.Common.Services
             this._httpClient = httpClient;
 }
 
-        public async Task<T> ExecuteGet<T>(string url)
+        public async Task<Product> ExecuteGet<T>(string url)
         {
-            var httpClient = _httpClient.CreateClient();
+            var client = _httpClient.CreateClient();
 
             var apiUrl = new Uri(url);
 
-            using (var response = await httpClient.GetAsync(apiUrl, HttpCompletionOption.ResponseHeadersRead))
+            HttpResponseMessage response = await client.GetAsync(apiUrl).ConfigureAwait(false);
+
+            if (!response.IsSuccessStatusCode)
             {
-                var responseMsg = response.EnsureSuccessStatusCode();
+                _logger.LogError(response.StatusCode.ToString());
 
-                if (responseMsg.IsSuccessStatusCode)
-                {
-                    _logger.LogInformation(nameof(ExecuteGet) + "is success");
-                }
-                else
-                {
-                    HttpRequestException exception = new HttpRequestException(string.Format(
-                      CultureInfo.InvariantCulture,
-                      "Pinging search engine {0}. Response status code does not indicate success: {1} ({2}).",
-                      url,
-                      (int)response.StatusCode,
-                      response.ReasonPhrase));
-
-                    Exception ex = exception as Exception;
-
-                    _logger.LogError(ex, ex.Message);
-                }
-
-                var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
-
-                var result = JsonConvert.DeserializeObject<T>(stream.ToString());
-
-                _logger.LogInformation("Ended " + nameof(ExecuteGet));
-
-                return result;
+                return new Product();
             }
+
+            var result = JsonConvert.DeserializeObject<Product>(response.Content.ReadAsStringAsync().Result);
+
+            return result;            
         }
 
         public async Task<T> ExecutePost<T>(string url, T item)
@@ -72,6 +56,8 @@ namespace eAuction.Common.Services
             if (!response.IsSuccessStatusCode)
             {
                 _logger.LogError(response.StatusCode.ToString());
+
+                return default(T);
             }
 
             var result = JsonConvert.DeserializeObject<T>(response.Content.ReadAsStringAsync().Result);

@@ -41,7 +41,7 @@ namespace eAuction.Common.Repositories
         {
             this.database = await this.cosmosClient.CreateDatabaseIfNotExistsAsync(databaseId);
 
-            this.container = await this.database.CreateContainerIfNotExistsAsync(containerId, "/ProductName", 400);
+            this.container = await this.database.CreateContainerIfNotExistsAsync(containerId, "/productId", 400);
 
             ItemResponse<T> response;
 
@@ -63,7 +63,7 @@ namespace eAuction.Common.Repositories
         {
             this.database = await this.cosmosClient.CreateDatabaseIfNotExistsAsync(databaseId);
 
-            this.container = await this.database.CreateContainerIfNotExistsAsync(containerId, "/ProductName", 400);
+            this.container = await this.database.CreateContainerIfNotExistsAsync(containerId, "/productId", 400);
 
             QueryDefinition queryDefinition = new QueryDefinition(sqlQueryText);
 
@@ -88,7 +88,7 @@ namespace eAuction.Common.Repositories
         {
             this.database = await this.cosmosClient.CreateDatabaseIfNotExistsAsync(databaseId);
 
-            this.container = await this.database.CreateContainerIfNotExistsAsync(containerId, "/ProductName", 400);
+            this.container = await this.database.CreateContainerIfNotExistsAsync(containerId, "/productId", 400);
 
             ItemResponse<T> response = await this.container.ReadItemAsync<T>(id, new PartitionKey(partitionKey));
 
@@ -106,7 +106,7 @@ namespace eAuction.Common.Repositories
         {
             this.database = await this.cosmosClient.CreateDatabaseIfNotExistsAsync(databaseId);
 
-            this.container = await this.database.CreateContainerIfNotExistsAsync(containerId, "/ProductName", 400);
+            this.container = await this.database.CreateContainerIfNotExistsAsync(containerId, "/productId", 400);
 
             // Delete an item. Note we must provide the partition key value and id of the item to delete
             ItemResponse<T> response = await this.container.DeleteItemAsync<T>(id, new PartitionKey(partitionKey));
