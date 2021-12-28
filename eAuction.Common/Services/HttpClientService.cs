@@ -3,7 +3,6 @@ using eAuction.Common.Models;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
-using System.Globalization;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,6 +40,25 @@ namespace eAuction.Common.Services
             var result = JsonConvert.DeserializeObject<Product>(response.Content.ReadAsStringAsync().Result);
 
             return result;            
+        }
+
+        public async Task<bool> ExecuteDelete(string url)
+        {
+            var client = _httpClient.CreateClient();
+
+            var apiUrl = new Uri(url);
+
+            HttpResponseMessage response = await client.DeleteAsync(apiUrl).ConfigureAwait(false);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                _logger.LogError(response.StatusCode.ToString());
+
+                return false;
+            }
+            {
+                return true;
+            }
         }
 
         public async Task<T> ExecutePost<T>(string url, T item)

@@ -8,5 +8,7 @@ namespace eAuction.Common.Interfaces
         Task<Product> ExecuteGet<T>(string url);
 
         Task<T> ExecutePost<T>(string url, T item);
+
+        Task<bool> ExecuteDelete(string url);
     }
 }

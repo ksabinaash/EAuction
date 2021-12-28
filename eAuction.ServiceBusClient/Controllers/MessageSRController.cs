@@ -1,5 +1,6 @@
 ﻿using eAuction.Common.Interfaces;
 using eAuction.Common.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -59,7 +60,7 @@ namespace eAuction.ServiceBusClient.Controllers
             {
                 _logger.LogError(ex, ex.Message);
 
-                return false;
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
 
             finally
@@ -68,11 +69,11 @@ namespace eAuction.ServiceBusClient.Controllers
             }
         }
 
-        [HttpPost("add-getbuyersbyproductidmsg")]
+        [HttpPost("add-productidmsg")]
         [Produces(typeof(bool))]
-        public virtual async Task<ActionResult<bool>> AddGetBuyersByProductIdMsg(int productId)
+        public virtual async Task<ActionResult<bool>> AddProductIdMsg(int productId)
         {
-            _logger.LogInformation("Began" + nameof(AddGetBuyersByProductIdMsg));
+            _logger.LogInformation("Began" + nameof(AddProductIdMsg));
 
             try
             {
@@ -91,16 +92,17 @@ namespace eAuction.ServiceBusClient.Controllers
             {
                 _logger.LogError(ex, ex.Message);
 
-                return false;
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
 
             finally
             {
-                _logger.LogInformation("Ended" + nameof(AddGetBuyersByProductIdMsg));
+                _logger.LogInformation("Ended" + nameof(AddProductIdMsg));
             }
         }
 
         [HttpGet("execute-addbidmsg")]
+        [Produces(typeof(Buyer))]
         public virtual async Task<ActionResult<Buyer>> ReadAndExecuteAddBidMsg()
         {
             _logger.LogInformation("Began" + nameof(ReadAndExecuteAddBidMsg));
@@ -131,7 +133,7 @@ namespace eAuction.ServiceBusClient.Controllers
             {
                 _logger.LogError(ex, ex.Message);
 
-                return new Buyer();
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
 
             finally
@@ -141,7 +143,7 @@ namespace eAuction.ServiceBusClient.Controllers
         }
 
         [HttpGet("execute-getbuyersmsg")]
-        [Produces(typeof(bool))]
+        [Produces(typeof(List<Buyer>))]
         public virtual async Task<ActionResult<List<Buyer>>> ReadAndExecuteGetBuyersMsg()
         {
             _logger.LogInformation("Began" + nameof(ReadAndExecuteGetBuyersMsg));
@@ -159,7 +161,7 @@ namespace eAuction.ServiceBusClient.Controllers
                     return NotFound("Message not found!");
                 }
 
-                var apiUrl = _config.GetSection("GetProductUrl").Value;
+                var apiUrl = _config.GetSection("ProductUrl").Value;
 
                 var productId = JsonConvert.DeserializeObject<int>(productJsonMsg);
 
@@ -174,12 +176,55 @@ namespace eAuction.ServiceBusClient.Controllers
             {
                 _logger.LogError(ex, ex.Message);
 
-                return new List<Buyer>();
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
 
             finally
             {
                 _logger.LogInformation("Ended" + nameof(ReadAndExecuteGetBuyersMsg));
+            }
+        }
+
+        [HttpGet("execute-deleteProduct")]
+        [Produces(typeof(bool))]
+        public virtual async Task<ActionResult<bool>> ReadAndExecuteDeleteProductMsg()
+        {
+            _logger.LogInformation("Began" + nameof(ReadAndExecuteDeleteProductMsg));
+
+            try
+            {
+                var sbConnString = _config.GetSection("AzureSBConnectionString").Value;
+
+                var queueName = _config.GetSection("AzureSBProductQueueName").Value;
+
+                var productJsonMsg = await _service.ReceiveMessage(sbConnString, queueName).ConfigureAwait(false);
+
+                if (string.IsNullOrWhiteSpace(productJsonMsg))
+                {
+                    return NotFound("Message not found!");
+                }
+
+                var apiUrl = _config.GetSection("ProductUrl").Value;
+
+                var productId = JsonConvert.DeserializeObject<int>(productJsonMsg);
+
+                var deleteProductUrl = string.Format("{0}/{1}", apiUrl, productId);
+
+                var result = await _httpClientService.ExecuteDelete(deleteProductUrl);
+
+                return result;
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+
+            finally
+            {
+                _logger.LogInformation("Ended" + nameof(ReadAndExecuteDeleteProductMsg));
             }
         }
     }
