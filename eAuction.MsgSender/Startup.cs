@@ -1,3 +1,5 @@
+using eAuction.Common.Interfaces;
+using eAuction.Common.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,7 +30,11 @@ namespace eAuction.MsgSender
         {
             services.AddCors();
 
-            services.AddControllers();
+            services.AddLogging();
+
+            services.AddScoped<IAzureMsgService, AzureMsgService>();
+
+            services.AddControllers();            
 
             services.AddSwaggerGen(c =>
             {

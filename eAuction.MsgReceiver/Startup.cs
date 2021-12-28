@@ -1,3 +1,5 @@
+using eAuction.Common.Interfaces;
+using eAuction.Common.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +22,14 @@ namespace eAuction.MsgReceiver
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
+
+            services.AddLogging();
+
+            services.AddHttpClient();
+
+            services.AddScoped<IAzureMsgService, AzureMsgService>();
+
+            services.AddScoped<IHttpClientService, HttpClientService>();
 
             services.AddControllers();
 

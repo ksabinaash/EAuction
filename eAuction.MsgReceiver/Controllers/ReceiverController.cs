@@ -18,13 +18,13 @@ namespace eAuction.MsgReceiver.Controllers
     {
         private readonly ILogger<ReceiverController> _logger;
 
-        private readonly IAzureMsgReceiverService _service;
+        private readonly IAzureMsgService _service;
 
         private readonly IConfiguration _config;
 
         private readonly IHttpClientService _httpClientService;
 
-        public ReceiverController(ILogger<ReceiverController> logger, IAzureMsgReceiverService service, IConfiguration config, IHttpClientService httpClientService)
+        public ReceiverController(ILogger<ReceiverController> logger, IAzureMsgService service, IConfiguration config, IHttpClientService httpClientService)
         {
             this._logger = logger;
 
@@ -35,31 +35,33 @@ namespace eAuction.MsgReceiver.Controllers
             this._httpClientService = httpClientService;
         }
 
-        [HttpPost("execute-addbid")]
-        public virtual async Task<ActionResult<bool>> ReadAndExecuteAddBidMsg()
+        [HttpGet("execute-addbid")]
+        public virtual async Task<ActionResult<Buyer>> ReadAndExecuteAddBidMsg()
         {
             _logger.LogInformation("Began" + nameof(ReadAndExecuteAddBidMsg));
 
             try
             {
-                var queueName = _config.GetSection("AzureSBBidQueue").Value;
+                var sbConnString = _config.GetSection("AzureSBConnectionString").Value;
 
-                var bidJsonMsg = await _service.ReceiveMessage(queueName).ConfigureAwait(false);
+                var queueName = _config.GetSection("AzureSBBidQueueName").Value;
+
+                var bidJsonMsg = await _service.ReceiveMessage(sbConnString, queueName).ConfigureAwait(false);
 
                 var addBidUrl = _config.GetSection("AddBidUrl").Value;
 
                 var buyer = JsonConvert.DeserializeObject<Buyer>(bidJsonMsg);
 
-                await _httpClientService.ExecutePost<Buyer>(addBidUrl, buyer);
+                var buyerResult = await _httpClientService.ExecutePost<Buyer>(addBidUrl, buyer);
 
-                return true;
+                return buyerResult ?? new Buyer();
             }
 
             catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
 
-                return false;
+                return new Buyer();
             }
 
             finally
@@ -68,17 +70,19 @@ namespace eAuction.MsgReceiver.Controllers
             }
         }
 
-        [HttpPost("execute-getbids")]
+        [HttpGet("execute-getbids")]
         [Produces(typeof(bool))]
-        public virtual async Task<ActionResult<bool>> ReadAndExecuteProductIdMsg()
+        public virtual async Task<ActionResult<List<Buyer>>> ReadAndExecuteProductIdMsg()
         {
             _logger.LogInformation("Began" + nameof(ReadAndExecuteProductIdMsg));
 
             try
             {
-                var queueName = _config.GetSection("AzureSBProductQueue").Value;
+                var sbConnString = _config.GetSection("AzureSBConnectionString").Value;
 
-                var productJsonMsg = await _service.ReceiveMessage(queueName).ConfigureAwait(false);
+                var queueName = _config.GetSection("AzureSBProductQueueName").Value;
+
+                var productJsonMsg = await _service.ReceiveMessage(sbConnString, queueName).ConfigureAwait(false);
 
                 var apiUrl = _config.GetSection("GetProductUrl").Value;
 
@@ -86,16 +90,16 @@ namespace eAuction.MsgReceiver.Controllers
 
                 var getProductUrl = string.Format("{0}/{1}", apiUrl, productId);
 
-                await _httpClientService.ExecuteGet<Product>(getProductUrl);
+                var product = await _httpClientService.ExecuteGet<Product>(getProductUrl);
 
-                return true;
+                return product?.Buyers ?? new List<Buyer>();
             }
 
             catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
 
-                return false;
+                return new List<Buyer>();
             }
 
             finally

@@ -5,8 +5,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44322
+          "Host": "eauctionseller.azurewebsites.net",
+          "Port": 443
         }
       ],
       "UpstreamPathTemplate": "/e-auction/api/v1/seller/{id}",
@@ -17,8 +17,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44322
+          "Host": "eauctionseller.azurewebsites.net",
+          "Port": 443
         }
       ],
       "UpstreamPathTemplate": "/e-auction/api/v1/seller/add-product",
@@ -29,19 +29,31 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44322
+          "Host": "eauctionseller.azurewebsites.net",
+          "Port": 443
         }
       ],
       "UpstreamPathTemplate": "/e-auction/api/v1/seller/{id}",
-      "UpstreamHttpMethod": [ "DELETE"]
+      "UpstreamHttpMethod": [ "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/seller/",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "eauctionseller.azurewebsites.net",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/e-auction/api/v1/seller/",
+      "UpstreamHttpMethod": [ "GET" ]
     },
     {
       "DownstreamPathTemplate": "/api/v1/buyer/place-bid",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "eauctionbuyer.azurewebsites.net",
           "Port": 44394
         }
       ],
@@ -53,7 +65,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "eauctionbuyer.azurewebsites.net",
           "Port": 44394
         }
       ],

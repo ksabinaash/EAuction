@@ -17,11 +17,11 @@ namespace eAuction.MsgSender.Controllers
     {
         private readonly ILogger<SenderController> _logger;
 
-        private readonly IAzureMsgSenderService _service;
+        private readonly IAzureMsgService _service;
 
         private readonly IConfiguration _config;
 
-        public SenderController(ILogger<SenderController> logger, IAzureMsgSenderService service, IConfiguration config)
+        public SenderController(ILogger<SenderController> logger, IAzureMsgService service, IConfiguration config)
         {
             this._logger = logger;
 
@@ -40,9 +40,11 @@ namespace eAuction.MsgSender.Controllers
             {
                 var bidJsonMsg = JsonConvert.SerializeObject(bid);
 
-                var queueName = _config.GetSection("AzureSBBidQueue").Value;
+                var sbConnString = _config.GetSection("AzureSBConnectionString").Value;
 
-                await _service.SendMessage(bidJsonMsg, queueName).ConfigureAwait(false);
+                var queueName = _config.GetSection("AzureSBBidQueueName").Value;
+
+                await _service.SendMessage(sbConnString, queueName, bidJsonMsg).ConfigureAwait(false);
 
                 return true;
             }
@@ -70,9 +72,11 @@ namespace eAuction.MsgSender.Controllers
             {
                 var productJsonMsg = JsonConvert.SerializeObject(productId);
 
-                var queueName = _config.GetSection("AzureSBProductQueue").Value;
+                var sbConnString = _config.GetSection("AzureSBConnectionString").Value;
 
-                await _service.SendMessage(productJsonMsg, queueName).ConfigureAwait(false);
+                var queueName = _config.GetSection("AzureSBProductQueueName").Value;
+
+                await _service.SendMessage(sbConnString, queueName, productJsonMsg).ConfigureAwait(false);
 
                 return true;
             }
