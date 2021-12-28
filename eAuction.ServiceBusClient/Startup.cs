@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
-namespace eAuction.MsgReceiver
+namespace eAuction.ServiceBusClient
 {
     public class Startup
     {
@@ -35,7 +35,7 @@ namespace eAuction.MsgReceiver
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "eAuction.MsgReceiver", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "eAuction.ServiceBusClient", Version = "v1" });
             });
         }
 
@@ -49,7 +49,7 @@ namespace eAuction.MsgReceiver
 
             app.UseSwagger();
 
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "eAuction.MsgReceiver v1"));
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "eAuction.ServiceBusClient v1"));
 
             app.UseCors(builder =>
             {
