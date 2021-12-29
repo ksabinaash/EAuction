@@ -3,5 +3,6 @@
         "node_modules{,/**}",
         ".vscode{,/**}"
     ],
-    "appService.deploySubpath": "."
+    "appService.deploySubpath": "dist\\eAuctionDashboard",
+    "appService.defaultWebAppToDeploy": "/subscriptions/39549c10-134c-4ae9-9a3c-bda9fb184d50/resourceGroups/eAuctionRG/providers/Microsoft.Web/sites/eAuctionDashboard"
 }
