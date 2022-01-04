@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  productApiUrl:'https://eauctionseller.azurewebsites.net/api/v1/Seller'
+  productApiUrl:'http://eauctiongatewayapi.southindia.azurecontainer.io/e-auction/api/v1/seller'
 };
